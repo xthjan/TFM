@@ -1,0 +1,7 @@
+{
+    "compile-hero.disable-compile-files-on-did-save-code": false,
+    "php.validate.enable": true,
+    "php.validate.run": "onType",
+    "php.validate.executablePath": "C:\\Program Files (x86)\\PHP\\v7.4\\php.exe",
+    "sass.format.debug": true
+}

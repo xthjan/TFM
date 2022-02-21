@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Realización de una página web utilizando JavaScript</title>
+    <style>
+        .panel {
+            margin-top: 25px;
+            border: solid #333 1px;
+            padding: 30px 20px;
+            border-radius: 5px;
+        }
+        
+        .nav-title .small {
+            clear: both;
+            font-size: 1em;
+            display: block;
+            color: #999;
+        }
+        
+        .info-validacion {
+            width: 100%;
+            margin-top: .25rem;
+            font-size: 80%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light nav-title">
+            <section class="navbar-brand mb-0 h1">Fomulario de práctica JavaScript</section>
+            <section class="small"> Introduce tus datos para validación</section>
+        </nav>
+    </header>
+    <section class="container">
+        <form class="well form-horizontal" id="contacto">
+            <form class="well form-horizontal" id="contacto">
+                <section class="panel panel-default">
+                    <fieldset>
+                        <section class="panel-body">
+                            <section class="alert alert-danger" role="alert" id="errorMessage" style="display: none;">Ha ocurrido un error de validacion con los datos enviados</section>
+                            <section class="alert alert-success" role="alert" id="successMessage" style="display: none;">Todos los campos son validos</section>
+                            <div class="form-group row">
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="nombre">Nombre</label>
+                                    <input id="nombre" type="text" name="nombre" placeholder="Nombre" class="form-control" required>
+                                </section>
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="apellidos">Apellido(s)</label>
+                                    <input id="apellidos" type="text" name="apellidos" placeholder="Apellido(s)" class="form-control">
+                                </section>
+                            </div>
+                            <div class="form-group row">
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="email">Correo Electronico</label>
+                                    <input id="email" type="email" name="email" placeholder="Correo Electronico" class="form-control" required>
+
+                                </section>
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="fechaNacimiento">Fecha de Nacimiento</label>
+                                    <input id="fechaNacimiento" type="date" name="fechaNacimiento" placeholder="Fecha de Nacimiento" class="form-control" required>
+                                </section>
+                            </div>
+                            <div class="form-group row">
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="password">Password</label>
+                                    <input id="password" type="password" name="password" placeholder="Password" class="form-control" required>
+                                </section>
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="dni">DNI</label>
+                                    <input id="dni" type="text" name="dni" placeholder="DNI" class="form-control" required>
+                                </section>
+                            </div>
+                            <div class="form-group row">
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="tel">Teléfono</label>
+                                    <input id="tel" type="tel" name="tel" placeholder="Teléfono" class="form-control" required>
+
+                                </section>
+                                <section class="col-md-6 col-xs-12">
+                                    <label class="control-label" for="url">Web Site</label>
+                                    <input id="url" type="url" name="url" placeholder="Web Site" class="form-control">
+                                </section>
+                            </div>
+                            <section class="form-group row">
+                                <section class="col-md-6 col-xs-12">
+                                    <button type="submit" class="btn btn-success">Enviar Formulario</button>
+                                </section>
+                            </section>
+                        </section>
+                    </fieldset>
+                </section>
+            </form>
+        </form>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript">
+        /*
+         * Esta funcion se ejecuta una vez cargada la totalidad de la página
+         */
+        $(document).ready(function() {
+            /*
+             * Esta agrega el maximo a la fecha de nacimiento
+             */
+            $('#fechaNacimiento').attr("max", new Date().toISOString().split("T")[0]);
+
+            /*
+             * Esta agrega los listeners de los campos para el evento blur, esto valida el campo una vez
+             * se le retire el foco
+             */
+            $('input#nombre').on('blur', function(event) {
+                ValidarLongitud($(this));
+            });
+            $('input#apellidos').on('blur', function(event) {
+                ValidarLongitud($(this));
+            });
+            $('input#email').on('blur', function(event) {
+                ValidarLongitud($(this), 8, 120);
+            });
+            $('input#tel').on('blur', function(event) {
+                ValidarLongitud($(this), 9, 20);
+            });
+            $('input#url').on('blur', function(event) {
+                ValidarLongitud($(this), 5, 520);
+            })
+
+            $('input#dni').on('blur', function(event) {
+                ValidarDNI($(this));
+            })
+            $('input#password').on('blur', function(event) {
+                ValidarPassword($(this));
+            })
+
+            $('input#fechaNacimiento').on('blur', function(event) {
+                ValidarEdad($(this));
+            })
+
+            /*
+             * Esta agrega el listener a la forma, para el evento submit
+             */
+            $('form#contacto').on('submit', function(event) {
+                //Se elimina el comportamiento inicial
+                event.preventDefault();
+                //Se valida la forma
+                ValidateForm();
+            });
+        });
+
+        /*
+         * Esta function Valida toda la forma
+         */
+        function ValidateForm() {
+            // Se cargan en variables los controles de los mensages generales
+            var errorMessage = $('#errorMessage');
+            var successMessage = $('#successMessage');
+            // Se ocultan los mensajes
+            errorMessage.hide();
+            successMessage.hide();
+            var formaValida = true;
+            // Se validan todos los campos con sus funciones
+            formaValida = ValidarLongitud($('input#nombre')) && formaValida;
+            formaValida = ValidarLongitud($('input#apellidos')) && formaValida;
+            formaValida = ValidarLongitud($('input#email'), 8, 120) && formaValida;
+            formaValida = ValidarLongitud($('input#tel'), 9, 20) && formaValida;
+            formaValida = ValidarLongitud($('input#url'), 5, 520) && formaValida;
+
+            formaValida = ValidarDNI($('input#dni')) && formaValida;
+            formaValida = ValidarPassword($('input#password')) && formaValida;
+            formaValida = ValidarEdad($('input#fechaNacimiento')) && formaValida;
+            // Si la validacion completa es correcta entonces se muestra el mensaje de éxito y retorna
+            if (formaValida) {
+                successMessage.show();
+                return;
+            }
+            // Sino (intuido por que no hubo regreso) se muestra el mensaje de error.
+            errorMessage.show();
+        }
+
+        /*
+         * Esta function crea el segmento de un mensaje de campo incorrecto
+         */
+        function CreateError(message) {
+            return '<section class="info-validacion error text-danger">' + message + '</section>';
+        }
+
+        /*
+         * Esta function crea el segmento de un mensaje de campo correcto
+         */
+        function CreateOk(message) {
+            return '<section class="info-validacion text-success">' + message + '</section>';
+        }
+
+        /*
+         * Esta function valida la longitud de un campo, si el campo no es requerido
+         * entonces y el valor vacio, entonces no ejecuta la validacion
+         */
+        function ValidarLongitud(control, minimo = 2, maximo = 150) {
+            //Asignacion del valor a una variable local para mejor manejo
+            var valor = control.val();
+            //Se obtiene el control padre (wrapper) para insertar los mensajes
+            var controlPadre = control.parent();
+            //Se obtiene el valor de la leyenda
+            var leyenda = $('label', controlPadre).html();
+            //Se eliminan los mensajes anteriores
+            $('.info-validacion', controlPadre).remove();
+
+            //Si el campo no es requerido, y esta vacio, entonces no se valida.
+            if (!control.prop('required') && valor.trim() == "") {
+                controlPadre.append(CreateOk('El campo ' + leyenda + ' no es requerido, y viene vacío'));
+                return true;
+            }
+
+            //Si la longitud del valor es menor o igual al minimo, se guarda un error en los errores del campo,
+            if (valor.length <= minimo) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' es muy corto'));
+            }
+
+            //Si la longitud del valor es menor o igual al maximo, se guarda un error en los errores del campo
+            if (valor.length >= maximo) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' es muy largo'));
+            }
+
+            //Si no existe ningun error identificado, guardamos una leyenda de campo valido.
+            if ($('.error', controlPadre).length == 0) {
+                controlPadre.append(CreateOk('El campo ' + leyenda + ' se encuentra dentro de la longitud esperada.'));
+                return true;
+            }
+            return false;
+        }
+
+        /*
+         * Esta function valida la longitud de un NIF español, además 
+         * identifica el tipo de dato DNI, NIE, NIF persona física, NIF persona moral
+         */
+        function ValidarDNI(control) {
+            //Asignacion del valor a una variable local para mejor manejo
+            var valor = control.val();
+            //Se obtiene el control padre (wrapper) para insertar los mensajes
+            var controlPadre = control.parent();
+            //Se obtiene el valor de la leyenda
+            var leyenda = $('label', controlPadre).html();
+
+            //Se valida la longitud del DNI/NIE, si no es valido, retorna.
+            if (!ValidarLongitud(control, 8, 10)) {
+                controlPadre.append(CreateError('El campo ' + leyenda + '  debe tener 9 espacios'));
+                return false;
+            }
+            //Se extrae el primer dígito
+            var primerDigito = valor.substring(0, 1);
+
+            //Si el primer digito es númerico, el valor es un DNI, retorna
+            if ($.isNumeric(primerDigito)) {
+                controlPadre.append(CreateOk('Se ha introducido un DNI'));
+                return true;
+            }
+
+            //Arreglo para identificar NIF persona física
+            var arregloNIF = ["K", "L", "M"];
+
+            //Se busca el primer dígito, si no se encuentra es un NIF de persona física, retorna
+            if ($.inArray(primerDigito, arregloNIF) > -1) {
+                controlPadre.append(CreateOk("Se ha introducido un NIF de persona moral"));
+                return true;
+            }
+
+            //Arreglo para identificar NIE
+            var arregloNIE = ["X", "Y", "Z"];
+            if ($.inArray(primerDigito, arregloNIE) > -1) {
+                controlPadre.append(CreateOk("Se ha introducido un NIE"));
+                return true;
+            }
+            controlPadre.append(CreateOk("Se ha introducido un NIF de persona física"));
+            return true;
+        }
+
+        /*
+         * Esta function valida la longitud y composicón de un password
+         */
+        function ValidarPassword(control) {
+            //Asignacion del valor a una variable local para mejor manejo
+            var valor = control.val();
+            //Se obtiene el control padre (wrapper) para insertar los mensajes
+            var controlPadre = control.parent();
+            //Se obtiene el valor de la leyenda
+            var leyenda = $('label', controlPadre).html();
+
+            //Se valida la longitud del password, si no es valido, retorna.
+            if (!ValidarLongitud(control, 7, 17)) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' tener entre 8 y 16 espacios'));
+                return false;
+            };
+            var regex = new RegExp('.*[a-z].*');
+            //Si no existe una minúscula, agrego el error
+            if (!regex.test(valor)) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' no contiene minúsculas'));
+            } else {
+                controlPadre.append(CreateOk('El campo ' + leyenda + ' tiene al menos una minúscula'));
+            }
+            regex = new RegExp('.*[0-9].*');
+            //Si no existe una número, agrego el error
+            if (!regex.test(valor)) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' no contiene números'));
+            } else {
+                controlPadre.append(CreateOk('El campo ' + leyenda + ' tiene al menos un número'));
+            }
+            regex = new RegExp('.*[A-Z].*');
+            //Si no existe una mayúscula, agrego el error
+            if (!regex.test(valor)) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' no contiene mayúsculas'));
+            } else {
+                controlPadre.append(CreateOk('El campo ' + leyenda + ' tiene al menos una mayúscula'));
+            }
+            if ($('.error', controlPadre).length == 0) {
+                return true;
+            }
+            return false;
+        }
+
+        /*
+         * Esta function valida la edad de la persona en un rago de entre 5 y 120 años
+         */
+        function ValidarEdad(control) {
+            //Asignacion del valor a una variable local para mejor manejo
+            var valor = control.val();
+            //Se obtiene el control padre (wrapper) para insertar los mensajes
+            var controlPadre = control.parent();
+            //Se obtiene el valor de la leyenda
+            var leyenda = $('label', controlPadre).html();
+
+            //Se valida la longitud de la fecha, si no es valido, retorna.
+            if (!ValidarLongitud(control, 9, 11)) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' tener 10 espacios'));
+                return false;
+            };
+            //Creo una fecha con formato localizado.
+            var date = new Date(valor);
+            var edad = ((new Date()).getFullYear() - date.getFullYear()) - 1;
+
+            if (edad < 5) {
+                controlPadre.append(CreateError('Tu edad es ' + edad + ' años, no deberías usar este formulario'));
+            }
+            if (edad > 120) {
+                controlPadre.append(CreateError('Tu edad es ' + edad + ' años, ya no deberías usar este formulario'));
+            }
+            if ($('.error', controlPadre).length > 0) {
+                controlPadre.append(CreateError('El campo ' + leyenda + ' debe proveer de una edad entre 5 y 120 años'));
+                return false;
+            }
+            controlPadre.append(CreateOk('Tu edad esta entre los 5 y los 120 años'));
+            controlPadre.append(CreateOk('Tu edad es ' + edad + ' años'));
+            return true;
+        }
+    </script>
+</body>
+
+</html>

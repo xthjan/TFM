@@ -1,0 +1,286 @@
+*,
+html,
+body,
+header {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -.04em;
+    text-decoration: none;
+    font-size: .7em;
+    color: #083fad;
+}
+
+a:hover {
+    color: #ffc12f;
+}
+
+
+
+a.local {
+    color: #dd2430;
+}
+
+h2 {
+    letter-spacing: -.05em;
+    font-size: 4em;
+    line-height: .8;
+    margin-bottom: .5em;
+}
+
+h2 span {
+    letter-spacing: .5em;
+    text-transform: uppercase;
+    font-size: .3em;
+}
+
+h2 span.academico {
+    color: #dd2430;
+}
+
+
+h2 span.hobbie {
+    color: #ffc12f;
+}
+
+
+h2 span.aleatorio {
+    color: #083fad;
+}
+
+
+
+header {
+    background: black;
+}
+
+header h1 {
+    padding: 5px 0px 10px 0px;
+    width: 100%;
+    display: block;
+    background: black;
+}
+
+header h1 a {
+    color: #ffc12f;
+    letter-spacing: -.1em;
+    font-size: 1em;
+    background: black;
+    margin-left: 1em;
+}
+
+
+header section.mainBanner {
+    height: 50em;
+    background-color: black;
+    position: relative;
+    color: white;
+    margin-bottom: 3em;
+}
+
+header section.mainBanner div.presentacion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    line-height: 1;
+}
+
+header section.mainBanner div.presentacion h2 {
+    letter-spacing: .5em;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+header section.mainBanner div.presentacion h3 {
+    letter-spacing: -.1em;
+    text-transform: uppercase;
+    font-size: 12em;
+    line-height: .6em;
+    margin-bottom: .2em;
+    color: #ffc12f;
+}
+
+header section.mainBanner div.presentacion h4 {
+    font-size: 2em;
+    color: #dd2430;
+    text-transform: uppercase;
+    letter-spacing: -.05em;
+}
+
+article.contenedor {
+    width: 80%;
+    margin: 5em auto;
+    font-size: 1.5em;
+}
+
+article.contenedor h2 {
+    font-size: 2em;
+}
+
+article.contenedor h2 span {
+    display: block;
+}
+
+article.contenedor h2,
+article.contenedor p {
+    text-align: center;
+}
+
+article.contenedor p {
+    padding-left: 2em;
+    width: 60%;
+    margin: 0 auto;
+}
+
+article p {
+    font-size: 1em;
+    margin-top: 1em;
+}
+
+article div.leerMas {
+    text-align: right;
+    width: 60%;
+    margin: 0 auto;
+}
+
+
+
+footer {
+    height: 3em;
+    background: black;
+    color: white;
+    text-align: center;
+    padding-top: 1.5em;
+    font-size: 1em;
+    letter-spacing: -.05em;
+    margin-top: 2em;
+    width: 100%;
+}
+
+.fixed {
+    position: fixed;
+    width: 100%
+}
+
+.fixed-bottom {
+    position: fixed;
+    bottom: 0px;
+}
+
+.contenedor-info {
+    width: 70%;
+    float: left;
+    padding: 2em;
+    min-height: 30em;
+    margin: 1em 2em;
+    text-align: left;
+}
+
+
+.contenedor-info h2 span {
+    line-height: .7em;
+    display: block;
+}
+
+.contenedor-info .contenido p {
+    margin-bottom: 2em;
+}
+
+aside {
+    margin-top: 3em;
+}
+
+aside h2 {
+    font-size: 1.5em;
+}
+
+aside h3 {
+    letter-spacing: -.05em;
+}
+
+aside ul {
+    list-style: none;
+    margin-top: 1em;
+}
+
+aside section.info h3 {
+    margin-bottom: 1em;
+    margin-top: 2em;
+}
+
+aside section.info p {
+    font-size: .9em;
+}
+
+table.actividades {
+    width: 100%;
+    margin-top: 2em;
+    border-collapse: collapse;
+    border-spacing: 0em;
+}
+
+table.actividades thead th {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+table.actividades tbody th {
+    width: 4em;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+table.actividades tbody td {
+    width: 14em;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    height: 2em;
+    padding: .5em;
+}
+
+table.actividades tbody td.clase {
+    background-color: #e2e1e1;
+}
+
+table.actividades tr th.horario {
+    background-color: #eeeeee;
+}
+
+video {
+    max-width: 80%;
+}
+
+label {
+    clear: both;
+    display: block;
+    margin-top: .5em;
+}
+
+input {
+    padding: .8em;
+    border-radius: .35em;
+    border: solid .01em #888585;
+    margin-top: .5em;
+    width: 25em;
+}
+
+button {
+    clear: both;
+    display: block;
+    margin-top: 1em;
+    padding: .5em 3em;
+    background: #ffc12f;
+    border: .1em solid#ffb70d;    
+    border-radius: .3em;
+}
